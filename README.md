@@ -24,8 +24,15 @@ Last check: 2025-11-02 00:18:53, Total megabytes transferred so far: 39.56 MB
 ```
 
 ## Requirements:
+- slskd-upload-tracker.py
 - Latest version of Python
 - Integration in the slskd.yml file.
+
+## Usage
+Download slskd-upload-tracker.py and copy it to %localappdata%/slskd/scripts
+The script will start automatically with slskd if the integration is correct and python is isntalled. 
+The output folder is configured to be %localappdata%/slskd-upload-tracker but you can change it in the code if you want. 
+To make sure the script is working check the folder for new txt files.
 
 ## Integration
 
@@ -45,12 +52,6 @@ slskd.yml
         run:
           command: 'python %localappdata%\slskd\scripts\slskd-upload-tracker.py'
 ```
-
-## Usage
-Download slskd-upload-tracker.py file and copy it to %localappdata%/slskd/scripts
-The script will start automatically with slskd if the integration is correct and python is isntalled. 
-The output folder is configured to be %localappdata%/slskd-upload-tracker but you can change it in the code if you want. 
-To make sure the script is working check the folder for new txt files.
 
 ## License
 MIT
