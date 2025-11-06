@@ -30,6 +30,7 @@ Last check: 2025-11-02 00:18:53, Total megabytes transferred so far: 39.56 MB
 locate your slskd.yml file, usually in %localappdata%/slskd
 copy this piece of code to the perspective area of "integration".
 Make sure the indentation stays the same or slskd won't start.
+An example of slskd.yml is available to see how integration should look like.
 
 slskd.yml
 
