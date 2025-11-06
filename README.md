@@ -1,5 +1,4 @@
 ## Description
-A simple python tool to track uploads per user
 
 This is a simple python script that tracks uploads per user in seperate txt files. The files are updated regularly after each complete download.
 Only the file name and its size in Megabytes is documented. And a total of uploaded megabytes so far is calculated at the end. 
