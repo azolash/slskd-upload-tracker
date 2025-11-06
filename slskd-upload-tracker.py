@@ -60,9 +60,9 @@ def process_upload(data, tracker_dir):
     print(f"Logged {megabytes} MB to {username} - {filename}")
 
 def main():
-    if os.name == 'nt':  # Windows
+    if os.name == 'nt':
         tracker_dir = Path(os.environ['LOCALAPPDATA']) / "slskd" / "upload-tracker"
-    else:  # Linux/Mac
+    else:
         tracker_dir = Path.home() / ".local" / "share" / "slskd" / "upload-tracker"
     
     tracker_dir.mkdir(parents=True, exist_ok=True)
@@ -80,4 +80,5 @@ def main():
         print(f"Error processing upload data: {e}")
 
 if __name__ == "__main__":
+
     main()
