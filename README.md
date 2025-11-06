@@ -3,8 +3,6 @@
 This is a simple python script that tracks uploads per user in seperate txt files. The files are updated regularly after each complete download.
 Only the file name and its size in Megabytes is documented. And a total of uploaded megabytes so far is calculated at the end. 
 
-You need the latest version of python to run the script and to integrate it in slskd using the slskd.yml file.
-
 ## Example
 
 leecher.txt
@@ -17,27 +15,34 @@ Upload History for leecher
 
 Last check: 2025-11-06 04:17:50, Total megabytes transferred so far: 39.96 MB
 
+## Requirements:
+- Latest version of Python
+- Integration in the slskd.yml file.
+
 ## Integration
 
-you need to change the slskd.yml file to integrate the script.
-Make sure to remove all the relative # and that the identation stays the same.
-And to change the path to where the script is located on your pc.
+locate your slskd.yml file, usually in %localappdata%/slskd
+copy this piece of code to the perspective area of "integration".
+Make sure the indentation stays the same or slskd won't start.
 
 slskd.yml
 
+```yaml
   integration:
     scripts:
       upload_tracker:
         on:
           - UploadFileComplete
         run:
-          command: 'python C:\path\to\script\upload-tracker.py'
-
+          command: 'python %localappdata%\slskd\scripts\slskd-upload-tracker.py'
+```
 
 ## Usage
-
-The script will start automatically with slskd and record data on uploads to users.
-The output folder is configured to be C:\upload-tracker but you can change it in the code if you want. 
+Download the py file and copy it to %localappdata%/slskd/scripts
+The script will start automatically with slskd if the integration is correct and python is isntalled. 
+It will record data on uploads to users.
+The output folder is configured to be %localappdata%/slskd-upload-tracker but you can change it in the code if you want. 
+To make sure the script is working check the folder for new txt files.
 
 ## License
 MIT
