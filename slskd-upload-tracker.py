@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime
 import sys
+import re
 from pathlib import Path
 
 def get_filename_only(filepath):
@@ -20,30 +21,48 @@ def process_upload(data, tracker_dir):
     
     if os.path.exists(user_file):
         with open(user_file, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
+            content = f.read()
+        
+        lines = content.split('\n')
+        
+        header = lines[0] if lines else f"Upload History for {username}"
         
         upload_entries = []
+        in_entries_section = False
+        found_separator = False
+        
         for line in lines:
-            if ': ' in line and ' - ' in line and 'MB' in line:
-                upload_entries.append(line.strip())
+            line = line.strip()
+            if not line:
+                continue
+                
+            if line == header:
+                continue
+                
+            if '=========================' in line:
+                found_separator = True
+                break
+                
+            if not found_separator:
+                upload_entries.append(line)
         
         upload_entries.append(log_entry)
         
         total_mb = 0.0
         for entry in upload_entries:
             try:
-                import re
-                match = re.search(r'(\d+\.?\d*)\s*MB$', entry)
+                match = re.search(r'(\d+\.?\d*)\s*MB$', entry, re.IGNORECASE)
                 if match:
                     total_mb += float(match.group(1))
-            except (IndexError, ValueError) as e:
-                print(f"Error parsing entry: {entry} - {e}")
+            except (ValueError, AttributeError) as e:
+                print(f"Warning: Could not parse MB from entry: {entry} - {e}")
                 continue
         
         total_mb = round(total_mb, 2)
         
         with open(user_file, 'w', encoding='utf-8') as f:
-            f.write(f"Upload History for {username}\n\n")
+            header_text = f"Upload History for {username}"
+            f.write(f"{header_text}\n\n")
             
             for entry in upload_entries:
                 f.write(entry + '\n')
@@ -52,7 +71,8 @@ def process_upload(data, tracker_dir):
             f.write(f"Last check: {timestamp}, Total megabytes transferred so far: {total_mb} MB\n")
     else:
         with open(user_file, 'w', encoding='utf-8') as f:
-            f.write(f"Upload History for {username}\n\n")
+            header_text = f"Upload History for {username}"
+            f.write(f"{header_text}\n\n")
             f.write(log_entry + '\n')
             f.write("\n=========================\n")
             f.write(f"Last check: {timestamp}, Total megabytes transferred so far: {megabytes} MB\n")
@@ -82,3 +102,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
